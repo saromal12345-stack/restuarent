@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Orders{% endblock %}
+{% block content %}
+<h1>Orders</h1>
+
+<h2>Place an order</h2>
+<form method="post" action="/place-order">
+    <label>Customer</label>
+    <select name="customer" required>
+        {% for c in customers %}
+        <option value="{{ c.customers_id }}">{{ c.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Waiter</label>
+    <select name="waiter" required>
+        {% for w in waiters %}
+        <option value="{{ w.waiter_id }}">{{ w.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label>Table number (optional)</label>
+    <input type="number" name="table_no" min="1">
+
+    <label>Dishes</label>
+    <div id="rows">
+        <div class="row">
+            <select name="item" required>
+                {% for m in menu %}
+                <option value="{{ m.item_id }}">{{ m.item_name }} (Rs. {{ m.price }})</option>
+                {% endfor %}
+            </select>
+            <input type="number" name="qty" min="1" value="1" required>
+            <button type="button" class="small" onclick="removeRow(this)">x</button>
+        </div>
+    </div>
+
+    <button type="button" class="small" onclick="addRow()">+ Add another dish</button>
+    <br>
+    <button type="submit">Place order</button>
+</form>
+
+<h2>All bills</h2>
+<table>
+    <tr>
+        <th>Order</th><th>Customer</th><th>Waiter</th><th>Table</th>
+        <th>Date</th><th>Bill (Rs.)</th><th>Bill</th>
+    </tr>
+    {% for b in bills %}
+    <tr>
+        <td>{{ b.order_id }}</td>
+        <td>{{ b.name }}</td>
+        <td>{{ b.waiter }}</td>
+        <td>{{ b.table_no if b.table_no else '-' }}</td>
+        <td>{{ b.order_date }}</td>
+        <td>{{ b.bill_amount }}</td>
+        <td><a href="/bill/{{ b.order_id }}">View bill</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+<script>
+    function addRow() {
+        var rows = document.getElementById("rows");
+        var copy = rows.querySelector(".row").cloneNode(true);
+        copy.querySelector("input").value = 1;
+        rows.appendChild(copy);
+    }
+    function removeRow(btn) {
+        var rows = document.getElementById("rows");
+        if (rows.querySelectorAll(".row").length > 1) {
+            btn.parentNode.remove();
+        }
+    }
+</script>
+{% endblock %}

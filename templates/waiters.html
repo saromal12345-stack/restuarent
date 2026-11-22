@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Waiters{% endblock %}
+{% block content %}
+<h1>Waiters</h1>
+
+{% if error == "1" %}<div class="error">Enter the waiter's name.</div>{% endif %}
+{% if error == "2" %}<div class="error">A waiter with this name already exists.</div>{% endif %}
+
+<h2>Add a waiter</h2>
+<form method="post" action="/add-waiter">
+    <label>Name</label>
+    <input type="text" name="name" required>
+    <button type="submit">Add waiter</button>
+</form>
+
+<h2>All waiters</h2>
+<table>
+    <tr><th>ID</th><th>Name</th></tr>
+    {% for w in waiters %}
+    <tr><td>{{ w.waiter_id }}</td><td>{{ w.name }}</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

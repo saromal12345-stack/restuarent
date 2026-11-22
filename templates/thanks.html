@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Order placed | Spice Route</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div style="max-width:480px; margin:60px auto; padding:20px; text-align:center;">
+        <h1>Thank you!</h1>
+        <p>Your order <b>#{{ order_id }}</b> for <b>table {{ table_no }}</b> has been sent to the kitchen.</p>
+        <p><a href="/m">Back to the menu</a></p>
+    </div>
+</body>
+</html>

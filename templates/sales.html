@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Sales Report{% endblock %}
+{% block content %}
+<h1>Sales Report</h1>
+
+{% macro section(title, rows) %}
+<div class="box">
+    <h2>{{ title }}</h2>
+    {% if not rows %}<p>No sales yet.</p>{% endif %}
+    {% for r in rows %}
+    <div class="line">
+        <div class="label">{{ r.label }}</div>
+                <div class="bar" data-pct="{{ r.pct }}"></div>
+        <div class="value">Rs. {{ r.total }}</div>
+    </div>
+    {% endfor %}
+</div>
+{% endmacro %}
+
+{{ section("Sales per day (last 14 days)", daily) }}
+{{ section("Sales per month", monthly) }}
+{{ section("Sales per year", yearly) }}
+{{ section("Top 5 dishes by money earned", top_dishes) }}
+{{ section("Sales per waiter", by_waiter) }}
+<script>
+    document.querySelectorAll(".bar").forEach(function (b) {
+        b.style.width = (b.dataset.pct * 2) + "px";
+    });
+</script>
+{% endblock %}

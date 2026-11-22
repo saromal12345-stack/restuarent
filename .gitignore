@@ -1,0 +1,4 @@
+config.py
+__pycache__/
+menu_qr.png
+*.pyc

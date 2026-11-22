@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Bill{% endblock %}
+{% block content %}
+<div class="bill">
+    <h1>Spice Route - Bill</h1>
+    <div>Order no: <b>{{ order.order_id }}</b></div>
+    <div>Customer: <b>{{ order.name }}</b></div>
+    <div>Date: {{ order.order_date }}</div>
+    <div>Status: {{ order.status }}</div>
+
+    <table>
+        <tr><th>Dish</th><th>Qty</th><th>Price</th><th class="right">Amount</th></tr>
+        {% for i in items %}
+        <tr>
+            <td>{{ i.item_name }}</td>
+            <td>{{ i.quantity }}</td>
+            <td>{{ i.price }}</td>
+            <td class="right">{{ i.line_total }}</td>
+        </tr>
+        {% endfor %}
+        <tr><td colspan="3" class="right">Subtotal</td><td class="right">{{ subtotal }}</td></tr>
+        <tr><td colspan="3" class="right">Tax (5%)</td><td class="right">{{ tax }}</td></tr>
+        <tr class="total"><td colspan="3" class="right">Total (Rs.)</td><td class="right">{{ total }}</td></tr>
+    </table>
+
+    <button onclick="window.print()">Print bill</button>
+</div>
+{% endblock %}

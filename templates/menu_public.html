@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Menu | Spice Route</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .pub-head { background: var(--brown); color: var(--cream); padding: 18px; text-align: center; }
+        .pub-head svg { vertical-align: middle; }
+        .pub-head h1 { color: var(--cream); margin: 8px 0 0 0; }
+        .pub-wrap { max-width: 520px; margin: 0 auto; padding: 20px; }
+        .dish { display: flex; align-items: center; justify-content: space-between; gap: 10px;
+                background: var(--white); border: 1px solid var(--line); border-radius: 10px;
+                padding: 12px 16px; margin-bottom: 10px; }
+        .dish .name { flex: 1; }
+        .dish .price { font-weight: bold; color: var(--orange-dark); white-space: nowrap; }
+        .dish input { width: 70px; flex: none; }
+        .table-box { background: var(--white); border: 1px solid var(--line); border-radius: 10px;
+                     padding: 14px 16px; margin-bottom: 20px; }
+        .order-btn { width: 100%; font-size: 17px; padding: 14px; }
+        .note { text-align: center; color: #8a7565; font-size: 14px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="pub-head">
+        <svg width="56" height="56" viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="32" cy="32" r="30" fill="#e8731a"/>
+            <path d="M14 34 H50 A18 16 0 0 1 14 34 Z" fill="#fff8ee"/>
+            <rect x="12" y="32" width="40" height="4" rx="2" fill="#fff8ee"/>
+            <path d="M24 28 Q20 22 24 16 M32 28 Q28 22 32 14 M40 28 Q36 22 40 16"
+                  stroke="#fff8ee" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </svg>
+        <h1>Spice Route</h1>
+        <div>Our Menu</div>
+    </div>
+
+    <div class="pub-wrap">
+        {% if error == "1" %}<div class="error">Please enter your table number (1 to 99).</div>{% endif %}
+        {% if error == "2" %}<div class="error">Please choose at least one dish.</div>{% endif %}
+        {% if error == "3" %}<div class="error">Too many orders from this phone. Please call your waiter.</div>{% endif %}
+        {% if error == "4" %}<div class="error">Ordering is not available right now. Please call your waiter.</div>{% endif %}
+        {% if error == "5" %}<div class="error">Please enter your name and a 10-digit phone number.</div>{% endif %}
+
+        <form method="post" action="/m/order" style="max-width:none; padding:0; border:none; background:none;">
+            <div class="table-box">
+                <label for="cust_name" style="margin-top:0;">Your name</label>
+                <input type="text" id="cust_name" name="cust_name" maxlength="100" required>
+
+                <label for="phone">Phone number (10 digits)</label>
+                <input type="text" id="phone" name="phone" maxlength="10"
+                       inputmode="numeric" pattern="[0-9]{10}" required>
+
+                <label for="table_no">Your table number</label>
+                <input type="number" id="table_no" name="table_no" min="1" max="99" required>
+            </div>
+
+            {% for item in items %}
+            <div class="dish">
+                <span class="name">{{ item.item_name }}</span>
+                <span class="price">Rs. {{ item.price }}</span>
+                <input type="number" name="qty_{{ item.item_id }}" min="0" max="20" value="0"
+                       inputmode="numeric" aria-label="Quantity of {{ item.item_name }}">
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="order-btn">Place order</button>
+        </form>
+
+        <div class="note">Choose how many of each dish you want, then tap Place order.</div>
+    </div>
+</body>
+</html>

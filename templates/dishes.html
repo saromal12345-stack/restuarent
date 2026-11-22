@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Manage Dishes{% endblock %}
+{% block content %}
+<h1>Manage Dishes</h1>
+
+{% if error == "1" %}<div class="error">Enter a dish name and a price above 0.</div>{% endif %}
+{% if error == "2" %}<div class="error">A dish with this name already exists.</div>{% endif %}
+
+<h2>Add a dish</h2>
+<form method="post" action="/add-dish">
+    <label>Dish name</label>
+    <input type="text" name="name" required>
+    <label>Price (Rs.)</label>
+    <input type="number" name="price" step="0.01" min="0.01" required>
+    <button type="submit">Add dish</button>
+</form>
+
+<h2>Current menu</h2>
+<table>
+    <tr><th>ID</th><th>Dish</th><th>Price (Rs.)</th></tr>
+    {% for d in dishes %}
+    <tr><td>{{ d.item_id }}</td><td>{{ d.item_name }}</td><td>{{ d.price }}</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

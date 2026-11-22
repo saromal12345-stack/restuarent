@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Kitchen{% endblock %}
+{% block content %}
+<h1>Kitchen: orders to prepare</h1>
+{% if not orders %}
+    <p>No pending orders.</p>
+{% endif %}
+{% for o in orders %}
+<div class="card">
+    <h3>Order {{ o.order_id }} - {{ o.name }}{% if o.table_no %} (Table {{ o.table_no }}){% endif %}</h3>
+    <div>Status: <span class="status">{{ o.status }}</span></div>
+    <ul>
+        {% for i in o["items"] %}
+        <li>{{ i.quantity }} x {{ i.item_name }}</li>
+        {% endfor %}
+    </ul>
+    <form method="post" action="/mark-served" style="border:none; padding:0; margin:0;">
+        <input type="hidden" name="order_id" value="{{ o.order_id }}">
+        <button type="submit">Mark as served</button>
+    </form>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %} | Spice Route</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="/menu-page">
+            <svg width="40" height="40" viewBox="0 0 64 64" aria-hidden="true">
+                <circle cx="32" cy="32" r="30" fill="#e8731a"/>
+                <path d="M14 34 H50 A18 16 0 0 1 14 34 Z" fill="#fff8ee"/>
+                <rect x="12" y="32" width="40" height="4" rx="2" fill="#fff8ee"/>
+                <path d="M24 28 Q20 22 24 16 M32 28 Q28 22 32 14 M40 28 Q36 22 40 16"
+                      stroke="#fff8ee" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </svg>
+            <span>Spice Route</span>
+        </a>
+        <nav>
+            <a href="/menu-page">Menu</a>
+            <a href="/orders">Orders</a>
+            <a href="/kitchen">Kitchen</a>
+            <a href="/sales">Sales</a>
+            <a href="/customers">Customers</a>
+            <a href="/dishes">Dishes</a>
+            <a href="/waiters">Waiters</a>
+        </nav>
+    </header>
+
+    <main class="page">
+        <a class="back" href="javascript:history.back()">&larr; Back</a>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>Spice Route - Restaurant Management System</footer>
+</body>
+</html>

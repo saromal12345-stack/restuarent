@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Customers{% endblock %}
+{% block content %}
+<h1>Customers</h1>
+
+{% if error == "1" %}<div class="error">Enter a name and a 10-digit phone number.</div>{% endif %}
+{% if error == "2" %}<div class="error">A customer with this phone number already exists.</div>{% endif %}
+
+<h2>Add a customer</h2>
+<form method="post" action="/add-customer">
+    <label>Name</label>
+    <input type="text" name="name" required>
+    <label>Phone (10 digits)</label>
+    <input type="text" name="phone" maxlength="10" required>
+    <button type="submit">Add customer</button>
+</form>
+
+<h2>All customers</h2>
+<table>
+    <tr><th>ID</th><th>Name</th><th>Phone</th></tr>
+    {% for c in customers %}
+    <tr><td>{{ c.customers_id }}</td><td>{{ c.name }}</td><td>{{ c.phone }}</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

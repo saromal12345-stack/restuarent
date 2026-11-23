@@ -1,3 +1,5 @@
+import threading
+import webbrowser
 import time
 from decimal import Decimal
 from flask import Flask, jsonify, render_template, request, redirect
@@ -626,4 +628,5 @@ def api_create_order():
     return jsonify({"message": "order placed", "order_id": order_id}), 201
 
 if __name__ == "__main__":
-        app.run(host="0.0.0.0", debug=False)
+    threading.Timer(1.5, lambda: webbrowser.open("http://127.0.0.1:5000/orders")).start()
+    app.run(host="0.0.0.0", debug=False)
